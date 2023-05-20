@@ -1,7 +1,7 @@
+
 if (process.env.NODE_env !== 'production') {
   require('dotenv').config();
 }
-
 
 const express = require('express');
 const app = express();
@@ -41,15 +41,6 @@ const sessionConfig = {
   },
 };
 
-app.use(session(sessionConfig));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
@@ -57,28 +48,24 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-
-
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-
-
-
 app.use('/handicrafts', handicraftRoutes);
 app.use('/handicrafts/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
+app.use(session(sessionConfig));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.render('home');
-});
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 app.all('*', (req, res, next) => {
@@ -87,7 +74,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = 'Oh no! Something went wrong';
+  if (!err.message) err.message = 'Something went wrong';
   res.status(statusCode).render('error', { err });
 });
 
