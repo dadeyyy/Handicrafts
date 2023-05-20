@@ -1,7 +1,7 @@
-
 if (process.env.NODE_env !== 'production') {
   require('dotenv').config();
 }
+
 
 const express = require('express');
 const app = express();
@@ -41,6 +41,15 @@ const sessionConfig = {
   },
 };
 
+app.use(session(sessionConfig));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
@@ -58,14 +67,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/handicrafts', handicraftRoutes);
 app.use('/handicrafts/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
-app.use(session(sessionConfig));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 
 app.all('*', (req, res, next) => {
