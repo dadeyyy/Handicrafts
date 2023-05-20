@@ -19,8 +19,8 @@ router.route('/')
     // })
 
 
-router.get('/new',isLoggedIn, handicrafts.renderNewForm)
-
+router.get('/new',isLoggedIn, handicrafts.renderNewForm);
+router.get('/search',catchAsync(handicrafts.searchStore));
 
 router.route('/:id')
     .get(catchAsync(handicrafts.showStore))

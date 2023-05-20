@@ -105,6 +105,7 @@ app.put('/handicrafts/:id/reviews/:author', async (req, res) => {
   await newReview.save();
   req.flash('success', 'Successfully updated review');
   res.redirect(`/handicrafts/${id}`);
+  
 });
 
 app.use('/handicrafts', handicraftRoutes);
@@ -113,15 +114,6 @@ app.use('/', userRoutes);
 
 app.get('/', (req, res) => {
   res.render('home');
-});
-
-app.get('/search', async (req, res) => {
-  const value = req.query.val;
-  const data = await Handicraft.findOne({
-    $or: [{ title: { $regex: value } }, { location: { $regex: value } }],
-  });
-
-  res.render('search', { data });
 });
 
 

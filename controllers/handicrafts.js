@@ -82,3 +82,12 @@ module.exports.deleteStore = async (req, res) => {
   req.flash('success', 'Successfully Deleted');
   res.redirect('/handicrafts');
 };
+
+module.exports.searchStore = async (req, res) => {
+  const value = req.query.val;
+  const data = await Handicraft.findOne({
+    $or: [{ title: { $regex: value } }, { location: { $regex: value } }],
+  });
+
+  res.render('search', { data });
+}
