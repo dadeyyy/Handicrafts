@@ -124,9 +124,7 @@ app.get('/search', async (req, res) => {
   res.render('search', { data });
 });
 
-app.get('/hahahahahha',(req,res)=>{
-  res.send("HAHAHAHAHAHAHAHHAHAHAHAH siraulo")
-})
+
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404));
 });
