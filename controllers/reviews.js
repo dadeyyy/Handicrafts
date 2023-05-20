@@ -26,3 +26,15 @@ module.exports.editReviewForm = async (req,res) =>{
     res.render('handicrafts/editReview.ejs', {foundAuthor,id});
 }
 
+module.exports.editReview = async (req, res) => {
+  
+    const { author, id } = req.params;
+    const newReview = await Review.findByIdAndUpdate(author, {
+      ...req.body.review,
+    });
+    await newReview.save();
+    req.flash('success', 'Successfully updated review');
+    res.redirect(`/handicrafts/${id}`);
+    
+  }
+

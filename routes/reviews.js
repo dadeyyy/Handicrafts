@@ -12,7 +12,7 @@ router.get('/:author/edit', isLoggedIn,  catchAsync(reviews.editReviewForm))
 
 router.post('/', isLoggedIn, validateReview, catchAsync(reviews.createReview)) 
 
-// router.put('/:author/edit', isLoggedIn, validateReview, catchAsync(reviews.editReview))
+router.put('/:author', isLoggedIn, validateReview, catchAsync(reviews.editReview))
 
 router.delete('/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(reviews.deleteReview))
 
