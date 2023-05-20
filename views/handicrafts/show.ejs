@@ -1,0 +1,226 @@
+<% layout('layout/boilerplate')%>
+<link rel="stylesheet" href="/stylesheets/stars.css" />
+
+<div class="row mb-5 text-black bg-dark">
+  <div class="col-6 offset-3">
+    <div id="map" class="mb-5" style="width: 635px; height: 300px"></div>
+    <div
+      id="carouselExampleControls"
+      class="carousel slide"
+      data-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <% handicraft.images.forEach((img, i)=> { %>
+        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+          <img class="d-block w-100" src="<%=img.url%>" alt="" />
+        </div>
+        <% }) %>
+      </div>
+      <% if (handicraft.images.length> 1) {%>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only"></span>
+      </a>
+      <% } %>
+    </div>
+
+    <div class="card mb-5" style="width: 40rem">
+      <!-- <img class="card-img-top" src="" alt="Card image cap"> -->
+
+      <div class="card-body">
+        <h5 class="card-title"><%=handicraft.title%></h5>
+        <p class="card-text"><%=handicraft.description%></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%=handicraft.location%></li>
+        <li class="list-group-item">
+          Made by: <%=handicraft.author.username%>
+        </li>
+      </ul>
+
+      <% if ((currentUser && handicraft.author.equals(currentUser._id)) ||
+      (currentUser && currentUser.username==='admin' )) { %>
+      <div class="card-body">
+        <a
+          href="/handicrafts/<%=handicraft._id%>/edit"
+          class="card-link btn btn-info"
+          >Edit Handicraft</a
+        >
+        <form
+          class="d-inline"
+          action="/handicrafts/<%=handicraft._id%>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger">DELETE</button>
+        </form>
+      </div>
+      <% } %>
+
+      <div class="card-footer text-muted">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          View Products
+        </button>
+
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Products</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <b> <%=handicraft.products%> </b>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="text-white mb-5">Reviews</h2>
+
+    <% if(currentUser) { %>
+    <h3 class="mt-3 text-white mt-3">Leave a Review</h3>
+    <form
+      class="mb-3 needs-validation"
+      action="/handicrafts/<%=handicraft._id%>/reviews"
+      method="POST"
+      novalidate
+    >
+      <div class="mb-3">
+        <fieldset class="starability-heartbeat">
+          <input
+            type="radio"
+            id="no-rate"
+            class="input-no-rate"
+            name="review[rating]"
+            value="1"
+            aria-label="No rating."
+            checked
+          />
+          <input
+            type="radio"
+            id="first-rate1"
+            name="review[rating]"
+            value="1"
+          />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input
+            type="radio"
+            id="first-rate2"
+            name="review[rating]"
+            value="2"
+          />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input
+            type="radio"
+            id="first-rate3"
+            name="review[rating]"
+            value="3"
+          />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input
+            type="radio"
+            id="first-rate4"
+            name="review[rating]"
+            value="4"
+          />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input
+            type="radio"
+            id="first-rate5"
+            name="review[rating]"
+            value="5"
+          />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+      <div class="mt-3 mb-3">
+        <label class="form-label text-white" for="body">Review</label>
+        <textarea
+          class="form-control"
+          name="review[body]"
+          id="body"
+          cols="30"
+          rows="3"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <button class="btn btn-success">Add Review</button>
+    </form>
+    <% } %> <% for(let review of handicraft.reviews) { %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h6 class="card-title">Author: <%=review.author.username%></h6>
+
+        <p class="starability-result" data-rating="<%=review.rating%>">
+          Rated: <%=review.rating%>
+        </p>
+        <p class="card-text">Message: <%=review.body%></p>
+        <% if (currentUser && review.author.equals(currentUser._id)) { %>
+        <form
+          action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-small btn-danger mb-3">Delete</button>
+        </form>
+        <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>/edit">
+            <button class="btn btn-small btn-primary" id="editReviewBtn">Edit review</button>
+        </form>
+        
+        
+        <% } %>
+
+
+        
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  const mapToken = '<%=process.env.MAPBOX_TOKEN%>';
+  const handicraft = <%- JSON.stringify(handicraft) %>
+</script>
+
+<script src="/javascripts/showPageMap.js"></script>

@@ -1,0 +1,22 @@
+module.exports.description = [
+'Unique and handmade gifts.',
+'Crafts for all ages and skill levels.',
+'Supplies and classes for all your crafting needs.',
+'Custom orders welcome.',
+'Handmade jewelry and accessories.',
+'Home décor and furnishings.',
+'Gift wrapping and special orders available.',
+'Creative workshops and events.',
+'Handmade pottery and ceramics.',
+'Hand-painted artwork and gifts.',
+'Custom made clothing and textiles.',
+'Personalized photo gifts and keepsakes.',
+'Handmade soaps and body products.',
+'Bespoke wooden furniture and home goods.',
+'Handmade paper goods and stationery.',
+'Hand-woven baskets and textiles.',
+'Hand-stitched quilts and blankets.',
+'Eco-friendly and sustainable products.',
+'Handmade musical instruments.',
+'Hand-painted glassware and tableware.'
+]
