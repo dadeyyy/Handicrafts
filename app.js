@@ -19,6 +19,7 @@ const User = require('./models/user');
 const handicraftRoutes = require('./routes/handicrafts');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 mongoose.set('strictQuery', true);
 async function main() {
@@ -45,8 +46,19 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
+
+passport.use(new LocalStrategy(User.authenticate()));
+// passport.use(new GoogleStrategy({
+//   clientID: process.env.CLIENT_ID,
+//   clientSecret:process.env.CLIENT_SECRET,
+//   callbackURL:'http://localhost:3000/handicrafts',
+//   scope: ['profile', 'email']
+// },
+// (accessToken, refreshToken, profile, done) =>{
+
+// }
+// ))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
