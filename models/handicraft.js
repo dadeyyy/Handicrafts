@@ -6,6 +6,7 @@ const opts = { toJSON: {virtuals: true}}
 const HandicraftSchema = new Schema({
     title: String,
     description: String,
+    isValidated: Boolean,
     geometry: {
         type:{
             type: String,

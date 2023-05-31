@@ -19,7 +19,9 @@ const User = require('./models/user');
 const handicraftRoutes = require('./routes/handicrafts');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
+const adminRoutes = require('./routes/admin')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const Handicraft = require('./models/handicraft')
 
 mongoose.set('strictQuery', true);
 async function main() {
@@ -79,8 +81,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/handicrafts', handicraftRoutes);
 app.use('/handicrafts/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
+app.use('/', adminRoutes);
 
-
+app.get('/display',async (req,res)=>{
+  const handicraft = await Handicraft.find({});
+  for(let i = 0 ; i< handicraft.length; i ++){
+    handicraft[i].isValidated = false;
+    await handicraft[i].save();
+  }
+  res.redirect('/')
+})
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404));

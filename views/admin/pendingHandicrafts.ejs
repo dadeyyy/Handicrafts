@@ -1,0 +1,23 @@
+<% layout('layout/boilerplate')%>
+
+
+<h1>Pending Stores:</h1>
+<div class="row">
+    <% for (let i = 0; i < handicraft.length; i++) { %>
+      <div class="col-md-4">
+        <div class="card text-dark mb-3">
+          <img class="card-img-top" src="<%= handicraft[i].images[0].url %>" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><%= handicraft[i].title %></h5>
+            <p class="card-text"><%= handicraft[i].description %></p>
+            <form action="/handicrafts/<%=handicraft[i]._id%>/validate" method="POST"><button class="btn btn-primary">Approve</button></form>
+            <form action="/handicrafts/<%=handicraft[i]._id%>/cancel" method="POST"><button class="btn btn-danger">Cancel</button></form>
+            
+          </div>
+        </div>
+      </div>
+      <% if ((i + 1) % 3 === 0) { %>
+        </div><div class="row">
+      <% } %>
+    <% } %>
+  </div>

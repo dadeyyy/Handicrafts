@@ -58,3 +58,11 @@ module.exports.isReviewAuthor = async(req,res, next)=>{
     }
     next();
 }
+
+module.exports.isAdmin = (req,res,next) =>{
+    if(!req.user || req.user.username !== 'admin'){
+        req.flash('error', 'You do not have permission');
+        return res.redirect('/');
+    }
+    next();
+}

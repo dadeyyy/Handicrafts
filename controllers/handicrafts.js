@@ -4,7 +4,7 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 module.exports.index = async (req, res) => {
-  const handicrafts = await Handicraft.find({});
+  const handicrafts = await Handicraft.find({isValidated:true});
   res.render('handicrafts/index', { handicrafts });
 };
 
@@ -27,6 +27,7 @@ module.exports.createStore = async (req, res, next) => {
   }));
 
   handicraft.author = req.user._id;
+  handicraft.isValidated = false;
   await handicraft.save();
 
   req.flash('success', 'Successfully made a new handicraft store!');
