@@ -10,6 +10,9 @@
         <a class="nav-link" href="/"> Home</a>
         <a class="nav-link" href="/handicrafts">Handicrafts</a>
         <a class="nav-link" href="/handicrafts/new">Add Store</a>
+        <% if(currentUser && currentUser.username === 'admin') {%>
+          <a class="nav-link" href="/handicrafts/admin/pending">Pending Store</a>
+          <% } %>
       </div>
       <div class="navbar-nav ml-auto">
         <% if(!currentUser) {%>

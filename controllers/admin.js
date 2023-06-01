@@ -12,7 +12,7 @@ module.exports.validateHandicraft = async (req,res) =>{
 
     if (!handicraft) {
         req.flash('error', 'Handicraft not found');
-        return res.redirect('/admin/pendingHandicrafts');
+        return res.redirect('/handicrafts/admin/pendingHandicrafts');
       }
     
       handicraft.isValidated = true;
@@ -20,7 +20,7 @@ module.exports.validateHandicraft = async (req,res) =>{
       await handicraft.save();
     
       req.flash('success', 'Handicraft store validated successfully');
-      res.redirect('/handicrafts');
+      res.redirect('/handicrafts/admin/pending');
 }
 
 module.exports.cancelHandicraft = async (req,res) =>{
@@ -29,11 +29,11 @@ module.exports.cancelHandicraft = async (req,res) =>{
 
     if (!handicraft) {
         req.flash('error', 'Handicraft not found');
-        return res.redirect('/admin/pendingHandicrafts');
+        return res.redirect('/handicrafts/admin/pendingHandicrafts');
       }
 
     await handicraft.remove();
 
     req.flash('success', 'Handicraft store canceled successfully');
-    res.redirect('/handicrafts');
+    res.redirect('/handicrafts/admin/pending');
 }

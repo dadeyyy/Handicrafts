@@ -5,6 +5,7 @@ const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 module.exports.index = async (req, res) => {
   const handicrafts = await Handicraft.find({isValidated:true});
+  
   res.render('handicrafts/index', { handicrafts });
 };
 
@@ -30,9 +31,9 @@ module.exports.createStore = async (req, res, next) => {
   handicraft.isValidated = false;
   await handicraft.save();
 
-  req.flash('success', 'Successfully made a new handicraft store!');
+  req.flash('success', 'Store created! Wait for the approval of the admin.');
 
-  res.redirect(`/handicrafts/${handicraft._id}`);
+  res.redirect(`/handicrafts`);
 };
 
 module.exports.showStore = async (req, res) => {

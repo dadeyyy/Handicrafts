@@ -83,14 +83,16 @@ app.use('/handicrafts/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 
-app.get('/display',async (req,res)=>{
-  const handicraft = await Handicraft.find({});
-  for(let i = 0 ; i< handicraft.length; i ++){
-    handicraft[i].isValidated = false;
-    await handicraft[i].save();
-  }
-  res.redirect('/')
-})
+// app.get('/display',async (req,res)=>{
+//   const handicraft = await Handicraft.find({});
+//   for(let i = 0 ; i< handicraft.length; i ++){
+//     handicraft[i].isValidated = false;
+//     await handicraft[i].save();
+//   }
+//   res.redirect('/')
+// })
+
+
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404));
