@@ -1,10 +1,19 @@
 const Handicraft = require('../models/handicraft');
 const Review = require('../models/review');
+const Filter = require('bad-words');
+const filter = new Filter();
+const newBadWords = ['tanga', 'siraulo', 'gago', 'putangina', 'tangina', 'bwiset' ]
+filter.addWords(...newBadWords);
 
 module.exports.createReview = async (req, res) => {
     const handicraft = await Handicraft.findById(req.params.id).populate('reviews')
-    const review = new Review(req.body.review);
-    review.author = req.user._id;
+    const {body, rating} = req.body.review;
+    const filtered = filter.clean(body);
+    const review = new Review({
+        body : filtered,
+        rating : rating
+    });
+        review.author = req.user._id;
     handicraft.reviews.push(review);
     await review.save()
     await handicraft.save()
