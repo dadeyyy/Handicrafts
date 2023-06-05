@@ -1,5 +1,5 @@
 const Handicraft = require('../models/handicraft');
-
+const User = require('../models/user');
 module.exports.viewPendingHandicrafts = async (req,res) =>{
     const pendingHandicrafts = await Handicraft.find({isValidated: false});
 
@@ -36,4 +36,9 @@ module.exports.cancelHandicraft = async (req,res) =>{
 
     req.flash('success', 'Handicraft store canceled successfully');
     res.redirect('/handicrafts/admin/pending');
+}
+
+module.exports.showUser = async(req,res)=>{
+    const Users = await User.find({});
+    res.render('admin/allUsers', {Users});
 }

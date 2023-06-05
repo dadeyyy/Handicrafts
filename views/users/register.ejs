@@ -1,4 +1,4 @@
-<% layout('layout/boilerplate')%>
+<% layout('layout/boilerplate') %>
 <div class="col-6 offset-3">
     <div class="container">
         <h1>Register</h1>
@@ -7,33 +7,51 @@
                 <label class="form-label" for="username">Username</label>
                 <input class="form-control" type="text" id="username" name="username" required>
                 <div class="valid-feedback">
-                    Looks-good!
+                    Looks good!
                 </div>
-
             </div>
-
-
 
             <div class="mb-3">
                 <label class="form-label" for="password">Password</label>
                 <input class="form-control" type="password" id="password" name="password" required>
                 <div class="valid-feedback">
-                    Looks-good!
+                    Looks good!
                 </div>
+            </div>
 
+            <div class="mb-3">
+                <label class="form-label" for="confirm-password">Confirm Password:</label>
+                <input class="form-control" type="password" id="confirm-password" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Passwords do not match.
+                </div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="email">Email</label>
                 <input class="form-control" type="email" id="email" name="email" required>
                 <div class="valid-feedback">
-                    Looks-good!
+                    Looks good!
                 </div>
-
             </div>
 
             <button class="btn btn-success">Register</button>
-
         </form>
     </div>
 </div>
+
+<script>
+    // Validate password and confirm password match on form submission
+    document.querySelector('.validated-form').addEventListener('submit', function(event) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent form submission
+            document.getElementById('confirm-password').classList.add('is-invalid');
+        }
+    });
+</script>
