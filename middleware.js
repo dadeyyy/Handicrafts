@@ -66,3 +66,23 @@ module.exports.isAdmin = (req,res,next) =>{
     }
     next();
 }
+
+module.exports.checkVisitorRole = (req, res, next) => {
+    const role = req.user.role;
+  
+    if (role !== 'visitor') {
+      return res.status(403).json({ message: 'Only visitors are allowed to make reviews.' });
+    }
+    next();
+  };
+
+  module.exports.checkStoreOwnerRole = (req,res,next) => {
+    const role = req.user.role;
+  
+    if(role !== 'store_owner') {
+      req.flash('error', 'You are not a store owner!')
+      return res.redirect('/handicrafts')
+    }
+  
+    next();
+  }

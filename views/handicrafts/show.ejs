@@ -117,7 +117,7 @@
     </div>
     <h2 class="text-white mb-5">Reviews</h2>
 
-    <% if(currentUser) { %>
+    <% if(currentUser && currentUser.role == 'visitor') { %>
     <h3 class="mt-3 text-white mt-3">Leave a Review</h3>
     <form
       class="mb-3 needs-validation"
@@ -191,7 +191,7 @@
     <div class="card mb-3">
       <div class="card-body">
         <h6 class="card-title">Author: <%=review.author.username%></h6>
-
+        
         <p class="starability-result" data-rating="<%=review.rating%>">
           Rated: <%=review.rating%>
         </p>

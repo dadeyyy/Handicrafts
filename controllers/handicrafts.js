@@ -93,3 +93,4 @@ module.exports.searchStore = async (req, res) => {
 
   res.render('search', { data });
 }
+
