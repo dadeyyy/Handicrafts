@@ -11,7 +11,7 @@
           </h5>
           <p class="card-text text-secondary">Email: <%= user.email %></p>
           <% if(user.role) { %>
-            <p class="card-text text-secondary">Role: <%= user.role %></p>
+          <p class="card-text text-secondary">Role: <%= user.role %></p>
           <% } %>
           <div class="d-flex justify-content-end">
             <div class="btn-group">
@@ -44,7 +44,7 @@
       })
         .then((response) => {
           if (response.ok) {
-            window.location.href = '/handicrafts/admin/users'
+            window.location.href = '/handicrafts/admin/users';
           } else {
             throw new Error('User deletion failed');
           }
