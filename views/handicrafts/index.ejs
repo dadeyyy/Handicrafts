@@ -1,49 +1,59 @@
-<% layout('layout/boilerplate')%>
-<div id="map" class="mb-5" style="width:100% ; height: 500px;"></div>
-<h1 class="mb-5" style="text-align: center;">Available handicrafts store</h1>
+<% layout('layout/boilerplate') %>
+<style>
+    @media (max-width: 767px) {
+        .w-md-50 {
+            width: 100%;
+        }
+    }
+</style>
+<div id="map" class="mb-5" style="width:100%; height:500px;"></div>
+<h1 class="mb-5" style="text-align:center;">Available handicrafts store</h1>
 
-<form class="form-inline p-3 mb-4 w-50 d-flex mt-3" action="/handicrafts/search">
-    <i class="fas fa-search" aria-hidden="true"></i>
-    <input class="form-control form-control-sm ml-3 w-75" type="text" name="val" placeholder="Search" aria-label="Search">
-    <button type="submit" class="btn btn-primary">Search</button>
+<form class="form-inline p-3 mb-4 w-md-50 w-100 mt-3" action="/handicrafts/search">
+  <div class="input-group">
+    <input class="form-control form-control-sm" type="text" name="val" placeholder="Search" aria-label="Search">
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </div>
 </form>
 
-<div class="container d-flex flex-column">
-    <div class="row">
-        <% for (let handicraft of handicrafts){ %>
-        <div class="col-md-4">
-            <div class="card mb-5 text-black p-3">
-                <% if(handicraft.images.length) { %>
-                <img src="<%=handicraft.images[0].url%>" alt="" class="img-fluid w-100">
-                <% } else {%> 
-                <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" class="img-fluid w-100">
-                <% } %>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <%=handicraft.title%>
-                    </h5>
-                    <p class="card-text">
-                        <%=handicraft.description%>
-                    </p>
-                    <p class="card-text">
-                        <small class="text-muted">
-                            <%= handicraft.location%>
-                        </small>
-                    </p>
-                    <p class="card-text">
-                        <b>Products: </b><%=handicraft.products%>
-                    </p>
-                    <a href="/handicrafts/<%=handicraft._id%>" class="btn btn-primary"> View <%=handicraft.title%></a>
-                </div>
-            </div>
-        </div>
+<div class="container">
+  <div class="row">
+    <% for (let handicraft of handicrafts) { %>
+    <div class="col-md-4">
+      <div class="card mb-5 text-black p-3">
+        <% if (handicraft.images.length) { %>
+        <img src="<%= handicraft.images[0].url %>" alt="" class="card-img-top">
+        <% } else { %>
+        <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" class="card-img-top">
         <% } %>
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= handicraft.title %>
+          </h5>
+          <p class="card-text">
+            <%= handicraft.description %>
+          </p>
+          <p class="card-text">
+            <small class="text-muted">
+              <%= handicraft.location %>
+            </small>
+          </p>
+          <p class="card-text">
+            <b>Products: </b><%= handicraft.products %>
+          </p>
+          <a href="/handicrafts/<%= handicraft._id %>" class="btn btn-primary">View <%= handicraft.title %></a>
+        </div>
+      </div>
     </div>
+    <% } %>
+  </div>
 </div>
 
 <script>
-    const mapToken = '<%=process.env.MAPBOX_TOKEN%>';
-    const handicrafts = {features: <%- JSON.stringify(handicrafts) %>}
+  const mapToken = '<%=process.env.MAPBOX_TOKEN%>';
+  const handicrafts = {features: <%- JSON.stringify(handicrafts) %>}
 </script>
 
 <script src="/javascripts/clusterMap.js"></script>

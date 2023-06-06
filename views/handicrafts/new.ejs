@@ -1,74 +1,59 @@
-<% layout('layout/boilerplate')%>
-    <div class="row">
-        <h1 class="text-center">New Store</h1>
-        <div class="col-6 offset-3">
-            <form action="/handicrafts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" id="title" name="handicraft[title]" required>
-                    <div class="valid-feedback">
-                        Looks-good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please fill-up the field.
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="location">Location</label>
-                    <input class="form-control" type="text" id="location" name="handicraft[location]" required>
-                    <div class="valid-feedback">
-                        Looks-good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please fill-up the field.
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="title">Products</label>
-                    <input class="form-control" type="text" id="title" name="handicraft[products]" required>
-                    <div class="valid-feedback">
-                        Looks-good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please fill-up the field.
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="image" class="form-label">Add image</label>
-                    <input class="form-control form-control-sm" id="image" type="file" name="image" multiple>
-                </div>
-
-                
-
-                <!-- <div class="mb-3">
-                    <label class="form-label" for="image">ImageURL</label>
-                    <input class="form-control" type="text" id="image" name="handicraft[image]" required>
-                    <div class="valid-feedback">
-                        Looks-good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please fill-up the field
-                    </div>
-                </div> -->
-
-                <div class="mb-3">
-                    <label class="form-label" for="description">Description</label>
-                    <textarea required cols="30" rows="10" class="form-control" type="text" id="description"
-                        name="handicraft[description]"></textarea>
-                    <div class="valid-feedback">
-                        Looks-good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please fill-up the field
-                    </div>
-                </div>
-
-                <div class="mb-3 mt-4">
-                    <button class="btn btn-success">Add Store</button>
-                </div>
-            </form>
-
-
-        </div>
+<% layout('layout/boilerplate') %>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">New Store</h1>
+      <div class="col-10 offset-1 col-md-6 offset-md-3">
+        <form action="/handicrafts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" id="title" name="handicraft[title]" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please fill up the field.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="location">Location</label>
+            <input class="form-control" type="text" id="location" name="handicraft[location]" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please fill up the field.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="products">Products</label>
+            <input class="form-control" type="text" id="products" name="handicraft[products]" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please fill up the field.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Add image</label>
+            <input class="form-control form-control-sm" id="image" type="file" name="image" multiple>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="description">Description</label>
+            <textarea required cols="30" rows="10" class="form-control" id="description" name="handicraft[description]"></textarea>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please fill up the field.
+            </div>
+          </div>
+          <div class="mb-3 mt-4">
+            <button class="btn btn-success btn-block">Add Store</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+</div>

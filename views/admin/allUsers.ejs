@@ -10,6 +10,9 @@
             Username: <%= user.username %>
           </h5>
           <p class="card-text text-secondary">Email: <%= user.email %></p>
+          <% if(user.role) { %>
+            <p class="card-text text-secondary">Role: <%= user.role %></p>
+          <% } %>
           <div class="d-flex justify-content-end">
             <div class="btn-group">
               <button
