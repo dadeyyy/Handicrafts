@@ -57,7 +57,12 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <b><%=handicraft.products%></b>
+                  <ul>
+                    <% const products = handicraft.products.split(','); %>
+                    <% for (let i = 0; i < products.length; i++) { %>
+                      <li><%= products[i] %></li>
+                    <% } %>
+                  </ul>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
