@@ -1,24 +1,29 @@
 <% layout('layout/boilerplate')%>
 
-    <h1>Result</h1>
+<div class="container">
+    <h1>Result for: <u><%=value %></u></h1>
 
-    <div class="card text-black w-50 mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <img src="<%=data.images[0].url%>" alt="" class="img-fluid">
-            </div>
-
-            <div class="col-mg-8">
-                <div class="card-body">
-                    <h5 class="card-title"> <%=data.title%> </h5>
-                    <p class="card-text"><%=data.description%></p>
-                    <p class="card-text">
-                        <small class="text-muted"><%= data.location%> </small>
-                    </p>
-                    <a href="/handicrafts/<%=data._id%>" class="btn btn primary"> View <%=data.title%></a>
+    <% if(data) { %>
+        <% for(let i = 0; i < data.length; i++) { %>
+            <div class="card text-black mt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="<%=data[i].images[0].url%>" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%=data[i].title%></h5>
+                            <p class="card-text"><%=data[i].description%></p>
+                            <p class="card-text">
+                                <small class="text-muted"><%=data[i].location%></small>
+                            </p>
+                            <a href="/handicrafts/<%=data[i]._id%>" class="btn btn-primary">View <%=data[i].title%></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    
+        <% } %>
+    <% } else { %>
+        <h1 class="mt-5"><%=value %> not found</h1>
+    <% } %>
+</div>

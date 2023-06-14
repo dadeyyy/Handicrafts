@@ -87,10 +87,14 @@ module.exports.deleteStore = async (req, res) => {
 
 module.exports.searchStore = async (req, res) => {
   const value = req.query.val;
-  const data = await Handicraft.findOne({
-    $or: [{ title: { $regex: value } }, { location: { $regex: value } }],
+  const data = await Handicraft.find({
+    $or: 
+    [{ title: { $regex: value, $options: 'i' } }, { location: { $regex: value,$options: 'i' } }, {products:{ $regex: value, $options: 'i'}}]
   });
 
-  res.render('search', { data });
+  if(data){
+    return res.render('search', { data, value });
+  }
+    req.flash('error', `${value} not found!`)
+    res.redirect('/handicrafts')
 }
-
