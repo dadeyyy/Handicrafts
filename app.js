@@ -22,6 +22,7 @@ const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const Handicraft = require('./models/handicraft')
+const mongoSanitize = require('express-mongo-sanitize');
 
 mongoose.set('strictQuery', true);
 async function main() {
@@ -34,6 +35,7 @@ main().catch((err) => console.log(err));
 
 
 const sessionConfig = {
+  name: 'session',
   secret: 'thisshouldbeabettersecret!',
   resave: false,
   saveUninitialized: true,
@@ -48,6 +50,7 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(mongoSanitize())
 
 
 passport.use(new LocalStrategy(User.authenticate()));
@@ -65,6 +68,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  console.log(req.query);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
