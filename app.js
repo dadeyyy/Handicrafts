@@ -25,22 +25,24 @@ const Handicraft = require('./models/handicraft');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
-//  const dbUrl = process.env.DB_URL;
-    const devDbUrl = 'mongodb://localhost:27017/geolocation'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/geolocation';
+   
 mongoose.set('strictQuery', true);
 
 async function main() {
-  await mongoose.connect(devDbUrl);
+  await mongoose.connect(dbUrl);
   console.log('CONNECTION OPEN');
 }
 
 main().catch((err) => console.log(err));
 
+const secret = process.env.SECRET || 'thisshouldbeascret'
+
 const store = MongoStore.create({
-  mongoUrl: devDbUrl,
+  mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-      secret: 'thisshouldbeabettersecret!'
+      secret
   } 
 });
 
@@ -51,7 +53,7 @@ store.on("error", function(e){
 const sessionConfig = {
   store,
   name: 'session',
-  secret: 'thisshouldbeabettersecret!',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -155,7 +157,7 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = 'Something went wrong';
   res.status(statusCode).render('error', { err });
 });
-
-app.listen(PORT, () => {
-  console.log('Listening on port ' + PORT);
+const port = process.env.PORT || 3000 
+app.listen(port , () => {
+  console.log(`Serving on port ${port}`);
 });
