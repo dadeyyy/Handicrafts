@@ -66,7 +66,7 @@
                   </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center mb-4 has-validation">
                   <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                   <div class="form-outline flex-fill mb-0">
                     <input
@@ -80,6 +80,7 @@
                     <label class="form-label" for="confirm-password"
                       >Repeat your password</label
                     >
+                    
                   </div>
                 </div>
 
@@ -107,7 +108,7 @@
               class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2"
             >
               <img
-                src="https://www.bria.com.ph/wp-content/uploads/2021/10/why-live-in-bataan-scaled.webp"
+                src="images\why-live-in-bataan-scaled.png"
                 class="img-fluid"
                 alt="Sample image"
               />
@@ -120,14 +121,16 @@
 </div>
 
 <script>
-    // Validate password and confirm password match on form submission
-    document.querySelector('.validated-form').addEventListener('submit', function(event) {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
+  document.querySelector('.validated-form').addEventListener('submit', function(event) {
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+  const confirmPasswordInput = document.getElementById('confirm-password');
 
-        if (password !== confirmPassword) {
-            event.preventDefault(); // Prevent form submission
-            alert('Password does not match')
-        }
-    });
+  if (password !== confirmPassword) {
+    event.preventDefault(); // Prevent form submission
+    confirmPasswordInput.classList.add('is-invalid'); // Add is-invalid class
+  } else {
+    confirmPasswordInput.classList.remove('is-invalid'); // Remove is-invalid class
+  }
+});
 </script>

@@ -2,6 +2,7 @@ if (process.env.NODE_env !== 'production') {
   require('dotenv').config();
 }
 
+
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -23,15 +24,32 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const Handicraft = require('./models/handicraft');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
+//  const dbUrl = process.env.DB_URL;
+    const devDbUrl = 'mongodb://localhost:27017/geolocation'
 mongoose.set('strictQuery', true);
+
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/geolocation');
+  await mongoose.connect(devDbUrl);
   console.log('CONNECTION OPEN');
 }
 
 main().catch((err) => console.log(err));
 
+const store = MongoStore.create({
+  mongoUrl: devDbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+      secret: 'thisshouldbeabettersecret!'
+  } 
+});
+
+store.on("error", function(e){
+  console.log("Session store error", e)
+})
+
 const sessionConfig = {
+  store,
   name: 'session',
   secret: 'thisshouldbeabettersecret!',
   resave: false,
@@ -42,6 +60,9 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
+
+
+
 
 app.use(session(sessionConfig));
 app.use(flash());
