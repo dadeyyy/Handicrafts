@@ -104,9 +104,9 @@
         <div class="card-body">
           <h6 class="card-title">Author: <%=review.author.username%></h6>
 
-          <p class="starability-result" data-rating="<%=review.rating%>">Rated: <%=review.rating%></p>
+          <p class="starability-result" data-rating="<%=review.rating%>">Rated: <%=review.rating%></p> 
           <p class="card-text">Message: <%=review.body%></p>
-          <% if (currentUser.username === 'admin') { %>
+          <% if (currentUser && currentUser.username === 'admin') { %>
             <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
               <button class="btn btn-small btn-danger mb-3">Delete</button>
             </form>
