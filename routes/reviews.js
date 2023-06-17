@@ -14,7 +14,7 @@ router.post('/', isLoggedIn, checkVisitorRole,  validateReview, catchAsync(revie
 
 router.put('/:author', isLoggedIn, checkVisitorRole, validateReview, catchAsync(reviews.editReview))
 
-router.delete('/:reviewId', isLoggedIn, isReviewAuthor, catchAsync(reviews.deleteReview))
+router.delete('/:reviewId', isLoggedIn, checkVisitorRole, isReviewAuthor, catchAsync(reviews.deleteReview))
 
 
 module.exports = router;

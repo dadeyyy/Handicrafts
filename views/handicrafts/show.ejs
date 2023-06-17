@@ -106,14 +106,18 @@
 
           <p class="starability-result" data-rating="<%=review.rating%>">Rated: <%=review.rating%></p>
           <p class="card-text">Message: <%=review.body%></p>
-          <% if (currentUser && review.author.equals(currentUser._id)) { %>
-          <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-            <button class="btn btn-small btn-danger mb-3">Delete</button>
-          </form>
-          <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>/edit">
-            <button class="btn btn-small btn-primary" id="editReviewBtn">Edit review</button>
-          </form>
+          <% if ((currentUser && review.author.equals(currentUser._id)) || currentUser.username === 'admin') { %>
+            <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+              <button class="btn btn-small btn-danger mb-3">Delete</button>
+            </form>
           <% } %>
+          <% if (currentUser && review.author.equals(currentUser._id))  {%>
+            <form action="/handicrafts/<%=handicraft._id%>/reviews/<%=review._id%>/edit">
+              <button class="btn btn-small btn-primary" id="editReviewBtn">Edit review</button>
+            </form>
+          <% } %>
+          
+          
         </div>
       </div>
       <% } %>

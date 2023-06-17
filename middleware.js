@@ -52,7 +52,7 @@ module.exports.validateReview = (req,res, next)=>{
 module.exports.isReviewAuthor = async(req,res, next)=>{
     const {id ,reviewId} = req.params;
     const review = await Review.findById(reviewId);
-    if(!review.author.equals(req.user._id)){
+    if(!review.author.equals(req.user._id) && req.user.username !=='admin'){
         req.flash('error', 'You do not have permission');
         return res.redirect(`/handicrafts/${id}`)
     }
@@ -70,7 +70,7 @@ module.exports.isAdmin = (req,res,next) =>{
 module.exports.checkVisitorRole = (req, res, next) => {
     const role = req.user.role;
   
-    if (role !== 'visitor') {
+    if ((role !== 'visitor') && (req.user.username !== 'admin')) {
       return res.status(403).json({ message: 'Only visitors are allowed to make reviews.' });
     }
     next();
